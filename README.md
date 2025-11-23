@@ -112,7 +112,10 @@ I implemented a **Server-Authoritative Versioning** strategy rather than a full 
 *   **Race Conditions:** Handled by the version check. If two requests arrive simultaneously, the database transaction ensures only one succeeds (Optimistic Locking).
 *   **Server Crash:** Since state is persisted in PostgreSQL, no data is lost. However, active user counts (in-memory) would reset. In production, we would use Redis for ephemeral state.
 
-### 5. Scalability & Limitations
+### 5. 🚀 Scalability & Production Readiness
+
+![Production Architecture](docs/production-architecture.png)
+
 *   **Scalability:** Currently, the socket server is stateful (rooms). To scale to multiple server instances, we would need a **Redis Adapter** for Socket.IO to broadcast events across clusters.
 *   **Database:** PostgreSQL is solid, but for extreme write loads (millions of keystrokes), we might buffer updates in Redis before persisting to SQL.
 
