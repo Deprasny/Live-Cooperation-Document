@@ -151,6 +151,16 @@ docker-compose.yml # Orchestration
 | `GET` | `/api/documents/:id` | Get a specific document |
 | `DELETE` | `/api/documents/:id` | Delete a document (Safe Delete enabled) |
 
+### 🔌 Socket.IO Events (Real-Time API)
+
+| Event Name | Direction | Payload | Description |
+| :--- | :--- | :--- | :--- |
+| `join-document` | Client -> Server | `documentId` | Join a specific document room. |
+| `edit-document` | Client -> Server | `{ content, version }` | Send a document update. |
+| `typing` | Client -> Server | `{ user }` | Notify that user is typing. |
+| `document-updated` | Server -> Client | `{ content, version }` | Broadcast new content to all clients. |
+| `user-typing` | Server -> Client | `{ user }` | Broadcast typing status to room. |
+
 ## 💬 How to Run
 
 ### Prerequisites
