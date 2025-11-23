@@ -199,9 +199,9 @@ export default function Editor({ documentId, initialContent, initialVersion }: E
             onChange={handleSwitchDocument}
             className="text-xs border rounded px-2 py-1 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            {documents.map((doc) => (
-              <option key={doc.id} value={doc.id}>
-                Doc: {doc.id.substring(0, 8)}...
+            {documents.map((d: DocumentSummary) => (
+              <option key={d.id} value={d.id}>
+                Document {d.id.slice(0, 8)}...
               </option>
             ))}
           </select>
