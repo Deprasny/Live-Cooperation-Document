@@ -193,6 +193,21 @@ npm install
 npm run dev
 ```
 
+## 🧪 Testing Strategy
+
+Since this is a real-time application, testing involves verifying concurrent interactions.
+
+### Manual Verification Steps
+1.  **Concurrency Test:** Open the app in two different browser windows (Incognito mode recommended).
+2.  **Real-time Sync:** Type in Window A and verify characters appear instantly in Window B.
+3.  **Conflict Test:** Disable network (offline mode) in Window A, type something. Type something else in Window B. Re-enable network in Window A. Verify that the server resolves to a consistent state (LWW).
+4.  **Safe Delete:** Open the same document in two windows. Try to delete it from Window A. Verify the alert "Cannot delete while others are editing" appears. Close Window B and try again.
+
+## ⚠️ Known Issues
+*   **Text Selection:** When a remote update arrives, the cursor position might reset or text selection might be lost if the user is actively highlighting text.
+*   **Offline Support:** There is no local storage persistence. If the user closes the tab while offline, unsaved changes are lost.
+*   **Race Conditions:** In extremely rare cases of exact millisecond collisions, the database transaction ensures consistency, but one user's edit might be rejected without a visible "retry" prompt (it just overwrites).
+
 ## 💡 Improvement Ideas
 1.  **CRDTs (Yjs/Automerge):** Replace the simple LWW strategy with Yjs for true character-level merging without overwriting.
 2.  **Cursor Presence:** Show where other users are typing (send `{ cursor: index }` events).
